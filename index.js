@@ -497,6 +497,6 @@ function directoryPage(req, res, all) {
 
 
 // initialize server
-app.listen(config.serverPort || 80, '127.0.0.1', () => {
+app.listen(config.serverPort || 8080, () => {
 	console.log('Server started.');
 })

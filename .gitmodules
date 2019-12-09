@@ -1,0 +1,3 @@
+[submodule "smb2"]
+	path = smb2
+	url = https://github.com/schierla/smb-browser-smb2.git

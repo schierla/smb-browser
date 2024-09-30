@@ -1,23 +1,24 @@
-const express = require('express');
-const bodyparser = require('body-parser');
-const cookieparser = require('cookie-parser');
-const smb2 = require('./smb2/lib/smb2.js');
-const mime = require('mime');
-const escape = require('escape-html');
-const uid = require('uid-safe');
+import express from "express";
+import bodyparser from "body-parser";
+import cookieparser from "cookie-parser";
+import smb2 from "./smb2/lib/smb2.js";
+import mime from "mime";
+import escape from "escape-html";
+import uid from "uid-safe";
+import fs from "fs";
 
 // load config file
-const config = require(process.argv.length>2 ? process.argv[2] : './config/config.json');
+const config = JSON.parse(fs.readFileSync(process.argv.length>2 ? process.argv[2] : './config/config.json'));
 const app = express();
 app.disable('x-powered-by');
 app.set('trust proxy', 'loopback');
 app.use(bodyparser.urlencoded({extended: false}));
 app.use(cookieparser());
-app.use('/fa', express.static(__dirname + '/node_modules/@fortawesome/fontawesome-free'));
+app.use('/fa', express.static(import.meta.dirname + '/node_modules/@fortawesome/fontawesome-free'));
 
 if(!config.shares) {
 	console.error("Configuration file must include shares.");
-	return;
+	process.exit();
 }
 
 // store sessions and share tokens
